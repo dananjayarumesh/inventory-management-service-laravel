@@ -1,0 +1,29 @@
+{
+   "name": "inventory-management-service-laravel",
+   "dockerComposeFile": [
+      "docker-compose.yml"
+   ],
+   "service": "inventory-management-laravel-dev",
+   "workspaceFolder": "/work",
+   "customizations": {
+      "vscode": {
+         "extensions": [
+            "devsense.phptools-vscode",
+            "donjayamanne.githistory",
+            "editorconfig.editorconfig",
+            // "github.copilot@prerelease",
+            // "github.copilot-chat@prerelease",
+            // "github.copilot-labs@prerelease",
+            "mhutchie.git-graph",
+            "mtxr.sqltools",
+            "mtxr.sqltools-driver-mysql",
+            "ms-vsliveshare.vsliveshare",
+            "mutantdino.resourcemonitor",
+            "shd101wyy.markdown-preview-enhanced",
+            "usernamehw.errorlens"
+         ]
+      }
+   },
+   "remoteUser": "dev",
+   "shutdownAction": "stopCompose"
+}

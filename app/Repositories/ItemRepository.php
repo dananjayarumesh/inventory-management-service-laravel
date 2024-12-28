@@ -20,4 +20,21 @@ class ItemRepository implements ItemRepositoryInterface
     {
         return Item::findOrFail($id)->toArray();
     }
+
+    public function storeRecord(string $name, int $categoryId, int $createdBy): void
+    {
+        Item::create([
+            'name' => $name,
+            'category_id' => $categoryId,
+            'created_by' => $createdBy
+        ]);
+    }
+
+    public function updateRecord(int $id, string $name, int $categoryId): void
+    {
+        Item::findOrFail($id)->create([
+            'name' => $name,
+            'catefory_id' => $categoryId
+        ]);
+    }
 }

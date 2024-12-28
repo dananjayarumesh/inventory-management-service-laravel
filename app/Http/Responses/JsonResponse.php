@@ -21,4 +21,11 @@ class JsonResponse
             $key => $data
         ]);
     }
+
+    public static function created(): HttpJsonResponse
+    {
+        return response()->json([
+            'success' => true
+        ], 201);
+    }
 }

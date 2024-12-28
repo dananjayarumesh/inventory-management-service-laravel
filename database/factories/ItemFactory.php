@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,7 +20,8 @@ class ItemFactory extends Factory
     {
         return [
             'category_id' => Category::factory(),
-            'name' => fake()->name 
+            'name' => fake()->name,
+            'created_by' => User::factory()
         ];
     }
 }

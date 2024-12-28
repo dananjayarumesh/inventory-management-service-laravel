@@ -8,6 +8,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 
 trait HttpHeaders
 {
+    protected $authUser;
     private function getAccessToken($payload = [])
     {
         $user = User::factory()->create($payload);

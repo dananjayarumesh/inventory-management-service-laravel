@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Items\ListRequest;
+use App\Http\Responses\JsonResponse;
 use App\Repositories\ItemRepositoryInterface;
-use App\Util\Response;
 
 class ItemController extends Controller
 {
@@ -20,13 +20,20 @@ class ItemController extends Controller
         $page = $request->page ?? 1;
         $perPage = $request->per_page ?? 10;
 
-        return Response::paginate(
+        return JsonResponse::paginate(
             $this->itemRepository->getPaginatedRecords(
                 $page,
                 $perPage
             ),
             $page,
             $perPage
+        );
+    }
+
+    public function show($id)
+    {
+        return JsonResponse::view(
+            $this->itemRepository->getSingleRecord($id)
         );
     }
 }

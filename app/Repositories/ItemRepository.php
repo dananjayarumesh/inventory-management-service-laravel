@@ -15,4 +15,9 @@ class ItemRepository implements ItemRepositoryInterface
             ->get()
             ->toArray();
     }
+
+    public function getSingleRecord(int $id): array
+    {
+        return Item::findOrFail($id)->toArray();
+    }
 }

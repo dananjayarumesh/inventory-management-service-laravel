@@ -23,7 +23,7 @@ class GetSingleTest extends TestCase
         );
         $response->assertSuccessful();
         $response->assertJson([
-            'item' => $items[0]->toArray()
+            'data' => $items[0]->toArray()
         ]);
 
         // item 2
@@ -33,7 +33,7 @@ class GetSingleTest extends TestCase
         );
         $response->assertSuccessful();
         $response->assertJson([
-            'item' => $items[1]->toArray()
+            'data' => $items[1]->toArray()
         ]);
     }
 

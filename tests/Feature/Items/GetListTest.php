@@ -4,13 +4,12 @@ namespace Tests\Feature\Items;
 
 use App\Models\Item;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\Traits\HttpHeaders;
 use Tests\TestCase;
 
 class GetListTest extends TestCase
 {
-    use HttpHeaders;
+    use HttpHeaders, RefreshDatabase;
 
     public function testGetList(): void
     {
@@ -67,14 +66,12 @@ class GetListTest extends TestCase
         $response->assertStatus(422);
         $response->assertJson([
             'errors' => [
-                [
-                    'page' => [
-                        0 => 'The page field must be a number.'
-                    ],
-                    'per_page' => [
-                        0 => 'The per page field must be a number.'
-                    ],
-                ]
+                'page' => [
+                    0 => 'The page field must be a number.'
+                ],
+                'per_page' => [
+                    0 => 'The per page field must be a number.'
+                ],
             ]
         ]);
     }

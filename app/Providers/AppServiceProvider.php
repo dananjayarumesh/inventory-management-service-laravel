@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\ItemRepository;
 use Illuminate\Support\ServiceProvider;
+use App\Repositories\ItemRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -11,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
     }
 
     /**

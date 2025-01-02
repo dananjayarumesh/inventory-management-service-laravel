@@ -16,11 +16,11 @@ class GetListTest extends TestCase
         $dispatchNotes = DispatchNote::factory()->count(2)->create();
 
         $response = $this->get(
-            '/api/dispatch_note',
+            '/api/dispatch-notes',
             $this->getAuthHeaders()
         );
 
-        $response->assertSuccessful();
+        $response->assertStatus(200);
         $response->assertJson([
             'page' => 1,
             'per_page' => 10,
@@ -34,7 +34,7 @@ class GetListTest extends TestCase
 
         // check page 1 results
         $response = $this->get(
-            '/api/dispatch_notes?page=1&per_page=2',
+            '/api/dispatch-notes?page=1&per_page=2',
             $this->getAuthHeaders()
         );
         $response->assertSuccessful();
@@ -46,7 +46,7 @@ class GetListTest extends TestCase
 
         // check page 2 results
         $response = $this->get(
-            '/api/dispatch_notes?page=2&per_page=2',
+            '/api/dispatch-notes?page=2&per_page=2',
             $this->getAuthHeaders()
         );
         $response->assertSuccessful();
@@ -60,7 +60,7 @@ class GetListTest extends TestCase
     public function testGetListValidation(): void
     {
         $response = $this->get(
-            '/api/dispatch_notes?page=test&per_page=test',
+            '/api/dispatch-notes?page=test&per_page=test',
             $this->getAuthHeaders()
         );
         $response->assertStatus(422);

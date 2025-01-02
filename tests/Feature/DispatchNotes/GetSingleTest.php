@@ -18,7 +18,7 @@ class GetSingleTest extends TestCase
 
         // item 1
         $response = $this->get(
-            '/api/dispatch_notes/' . $dispatchNotes[0]->id,
+            '/api/dispatch-notes/' . $dispatchNotes[0]->id,
             $this->getAuthHeaders()
         );
         $response->assertSuccessful();
@@ -28,7 +28,7 @@ class GetSingleTest extends TestCase
 
         // item 2
         $response = $this->get(
-            '/api/dispatch_notes/' . $dispatchNotes[1]->id,
+            '/api/dispatch-notes/' . $dispatchNotes[1]->id,
             $this->getAuthHeaders()
         );
         $response->assertSuccessful();
@@ -41,7 +41,7 @@ class GetSingleTest extends TestCase
     {
         // check with an invalid id
         $response = $this->get(
-            '/api/dispatch_notes/1',
+            '/api/dispatch-notes/1',
             $this->getAuthHeaders()
         );
         $response->assertStatus(404);

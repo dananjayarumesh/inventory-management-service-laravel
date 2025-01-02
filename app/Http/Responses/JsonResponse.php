@@ -33,4 +33,11 @@ class JsonResponse
     {
         return response()->json([], 204);
     }
+
+    public static function validationError(array $errors): HttpJsonResponse
+    {
+        return response()->json([
+            'errors' => $errors
+        ], 422);
+    }
 }

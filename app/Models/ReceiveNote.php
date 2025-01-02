@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ReceiveNote extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'note',
+        'item_id',
+        'qty',
+        'created_by'
+    ];
 }

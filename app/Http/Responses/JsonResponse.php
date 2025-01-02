@@ -28,4 +28,9 @@ class JsonResponse
             'success' => true
         ], 201);
     }
+
+    public static function updated(): HttpJsonResponse
+    {
+        return response()->json([], 204);
+    }
 }

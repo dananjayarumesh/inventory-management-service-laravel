@@ -51,7 +51,13 @@ class ItemController extends Controller
         return JsonResponse::created();
     }
 
-    // public function update(UpdateRequest $request) : HttpJsonResponse {
-        
-    // }
+    public function update($id, UpdateRequest $request): HttpJsonResponse
+    {
+        $this->itemRepository->updateRecord(
+            $id,
+            $request->name,
+            $request->category_id
+        );
+        return JsonResponse::updated();
+    }
 }

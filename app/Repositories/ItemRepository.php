@@ -32,9 +32,9 @@ class ItemRepository implements ItemRepositoryInterface
 
     public function updateRecord(int $id, string $name, int $categoryId): void
     {
-        Item::findOrFail($id)->create([
+        Item::findOrFail($id)->update([
             'name' => $name,
-            'catefory_id' => $categoryId
+            'category_id' => $categoryId
         ]);
     }
 }

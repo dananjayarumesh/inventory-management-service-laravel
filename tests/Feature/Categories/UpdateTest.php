@@ -10,9 +10,12 @@ use Tests\TestCase;
 
 class UpdateTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase, WithFaker;
+    use HttpHeaders;
+    use RefreshDatabase;
+    use WithFaker;
 
-    public function testUpdateRecord() {
+    public function testUpdateRecord()
+    {
         $category = Category::factory()->create();
         $request = [
             'name' => substr($this->faker->name, 0, 20)

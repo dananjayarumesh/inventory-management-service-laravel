@@ -33,7 +33,7 @@ class DispatchNoteRepository implements DispatchNoteRepositoryInterface
                 'qty' => $qty,
                 'created_by' => $createdBy
             ]);
-            
+
             $item = Item::findOrFail($itemId);
 
             if ($item->qty < $qty) {

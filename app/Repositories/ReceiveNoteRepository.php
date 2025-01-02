@@ -31,7 +31,7 @@ class ReceiveNoteRepository implements ReceiveNoteRepositoryInterface
                 'qty' => $qty,
                 'created_by' => $createdBy
             ]);
-            
+
             $item = Item::findOrFail($itemId);
             $item->increment('qty', $qty);
         });

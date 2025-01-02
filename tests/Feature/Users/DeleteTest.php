@@ -10,7 +10,9 @@ use Tests\TestCase;
 
 class DeleteTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase, WithFaker;
+    use HttpHeaders;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testDeleteRecord(): void
     {

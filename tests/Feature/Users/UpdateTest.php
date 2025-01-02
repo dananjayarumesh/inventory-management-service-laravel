@@ -11,7 +11,9 @@ use Tests\TestCase;
 
 class UpdateTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase, WithFaker;
+    use HttpHeaders;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testUpdateRecord()
     {

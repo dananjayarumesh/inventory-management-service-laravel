@@ -10,7 +10,8 @@ use Tests\TestCase;
 
 class GetSingleTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase;
+    use HttpHeaders;
+    use RefreshDatabase;
 
     public function testGetSingle(): void
     {

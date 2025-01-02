@@ -11,7 +11,9 @@ use Tests\TestCase;
 
 class LoginTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase, WithFaker;
+    use HttpHeaders;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testLogin(): void
     {

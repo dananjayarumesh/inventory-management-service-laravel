@@ -9,7 +9,9 @@ use Tests\TestCase;
 
 class CreateTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase, WithFaker;
+    use HttpHeaders;
+    use RefreshDatabase;
+    use WithFaker;
 
     public function testCreateRecord(): void
     {

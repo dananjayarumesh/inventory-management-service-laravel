@@ -11,9 +11,12 @@ use Tests\TestCase;
 
 class UpdateTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase, WithFaker;
+    use HttpHeaders;
+    use RefreshDatabase;
+    use WithFaker;
 
-    public function testUpdateRecord() {
+    public function testUpdateRecord()
+    {
         $category = Category::factory()->create();
         $item = Item::factory()->create();
         $request = [
@@ -82,7 +85,7 @@ class UpdateTest extends TestCase
         $category = Category::factory()->create();
         $request = [
             'name' => $this->faker->name,
-            'category_id' => $category->id 
+            'category_id' => $category->id
         ];
         $response = $this->put(
             '/api/items/32', // invalid id

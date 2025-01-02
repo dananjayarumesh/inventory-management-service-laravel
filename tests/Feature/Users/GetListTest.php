@@ -11,7 +11,8 @@ use Tests\TestCase;
 
 class GetListTest extends TestCase
 {
-    use HttpHeaders, RefreshDatabase;
+    use HttpHeaders;
+    use RefreshDatabase;
 
     public function testGetList(): void
     {

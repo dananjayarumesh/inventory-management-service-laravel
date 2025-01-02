@@ -10,12 +10,14 @@ class AuthService implements AuthServiceInterface
 {
     public function getAccessTokenByCred(string $email, string $password): string
     {
-        if (!$accessToken = Auth::attempt(
-            compact(
-                'email',
-                'password'
+        if (
+            !$accessToken = Auth::attempt(
+                compact(
+                    'email',
+                    'password'
+                )
             )
-        )) {
+        ) {
             throw new AuthFailedException('Invaid credentials provided.');
         }
         return $accessToken;

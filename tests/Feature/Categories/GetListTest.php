@@ -2,19 +2,28 @@
 
 namespace Tests\Feature\Categories;
 
+use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Tests\Feature\Traits\HttpHeaders;
 use Tests\TestCase;
 
 class GetListTest extends TestCase
 {
-    /**
-     * A basic feature test example.
-     */
-    public function test_example(): void
+    use HttpHeaders, RefreshDatabase;
+
+    public function testGetList(): void
     {
-        $response = $this->get('/');
+        $categories = Category::factory()->count(2)->create();
+
+        $response = $this->get(
+            '/api/categories',
+            $this->getAuthHeaders()
+        );
 
         $response->assertStatus(200);
+        $response->assertJson([
+            'data' => $categories->toArray()
+        ]);
     }
 }

@@ -36,7 +36,7 @@ class ItemController extends Controller
 
     public function show($id): HttpJsonResponse
     {
-        return JsonResponse::view(
+        return JsonResponse::success(
             $this->itemRepository->getSingleRecord($id)
         );
     }

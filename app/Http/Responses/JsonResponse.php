@@ -15,7 +15,7 @@ class JsonResponse
         ]);
     }
 
-    public static function view(array $data, string $key = 'data'): HttpJsonResponse
+    public static function success(array $data, string $key = 'data'): HttpJsonResponse
     {
         return response()->json([
             $key => $data

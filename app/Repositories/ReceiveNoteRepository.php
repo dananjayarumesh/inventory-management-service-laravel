@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class ReceiveNoteRepository implements ReceiveNoteRepositoryInterface
 {
-    public function getRecords(): array
+    public function getPaginatedRecords(int $page, int $perPage): array
     {
-        return ReceiveNote::all()->toArray();
+        $skipCount = $page * $perPage - $perPage;
+        return ReceiveNote::skip($skipCount)
+            ->take($perPage)
+            ->get()
+            ->toArray();
     }
 
     public function getSingleRecord(int $id): array

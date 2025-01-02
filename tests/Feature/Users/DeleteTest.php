@@ -16,11 +16,9 @@ class DeleteTest extends TestCase
     {
         $users = User::factory()->count(2)->create();
         $response = $this->delete(
-            '/api/users/' . $users[0],
+            '/api/users/' . $users[0]->id,
             [],
-            $this->getAuthHeaders([
-                'id' => 1
-            ])
+            $this->getAuthHeaders()
         );
         $response->assertStatus(204);
         $this->assertDatabaseHas('users', [
@@ -43,7 +41,7 @@ class DeleteTest extends TestCase
         );
         $response->assertStatus(status: 403);
         $response->assertJson([
-            'errors' => 'You cannot delete your own record.'
+            'errors' => 'Cannot delete this user at the moment.'
         ]);
     }
 

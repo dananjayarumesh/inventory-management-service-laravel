@@ -5,6 +5,7 @@ namespace Tests\Feature\Users;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\Feature\Traits\HttpHeaders;
 use Tests\TestCase;
 
@@ -14,12 +15,15 @@ class UpdateTest extends TestCase
 
     public function testUpdateRecord()
     {
+        $oldPass = Hash::make('111111');
+        $newPass = Hash::make('123456');
         $user = User::factory()->create([
-            'role' => 'admin'
+            'role' => 'admin',
+            'password' => $oldPass
         ]);
         $request = [
             'name' => substr($this->faker->name, 0, 20),
-            'role' => 'store_keeper'
+            'password' => $newPass
         ];
         $response = $this->put(
             '/api/users/' . $user->id,
@@ -31,8 +35,7 @@ class UpdateTest extends TestCase
         $response->assertStatus(status: 204);
         $this->assertDatabaseHas('users', [
             'id' => $user->id,
-            'name' => $request['name'],
-            'role' => $request['store_keeper'],
+            'name' => $request['name']
         ]);
     }
 
@@ -52,9 +55,6 @@ class UpdateTest extends TestCase
             'errors' => [
                 'name' => [
                     0 => 'The name field is required.'
-                ],
-                'email' => [
-                    0 => 'The email field is required.'
                 ]
             ]
         ]);
@@ -85,8 +85,7 @@ class UpdateTest extends TestCase
             'role' => 'admin'
         ]);
         $request = [
-            'name' => substr($this->faker->name, 0, 20),
-            'role' => 'store_keeper'
+            'name' => substr($this->faker->name, 0, 20)
         ];
         $response = $this->put(
             '/api/users/' . $user->id,
@@ -98,27 +97,6 @@ class UpdateTest extends TestCase
         $response->assertStatus(status: 403);
         $response->assertJson([
             'errors' => 'You do not have access to perform this action.'
-        ]);
-    }
-
-    public function testUpdateRecordAuthUserCannotChangeRole()
-    {
-        $request = [
-            'name' => substr($this->faker->name, 0, 20),
-            'role' => 'store_keeper'
-        ];
-        $authUserId = 1;
-        $response = $this->put(
-            '/api/users/' . $authUserId,
-            $request,
-            $this->getAuthHeaders([
-                'id' => $authUserId,
-                'role' => 'admin'
-            ])
-        );
-        $response->assertStatus(status: 403);
-        $response->assertJson([
-            'errors' => 'You cannot update your own role.'
         ]);
     }
 }

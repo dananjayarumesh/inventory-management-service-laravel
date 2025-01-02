@@ -17,7 +17,7 @@ class GetListTest extends TestCase
         $receiveNotes = ReceiveNote::factory()->count(2)->create();
 
         $response = $this->get(
-            '/api/receive_notes',
+            '/api/receive-notes',
             $this->getAuthHeaders()
         );
 
@@ -35,7 +35,7 @@ class GetListTest extends TestCase
 
         // check page 1 results
         $response = $this->get(
-            '/api/receive_notes?page=1&per_page=2',
+            '/api/receive-notes?page=1&per_page=2',
             $this->getAuthHeaders()
         );
         $response->assertSuccessful();
@@ -47,7 +47,7 @@ class GetListTest extends TestCase
 
         // check page 2 results
         $response = $this->get(
-            '/api/receive_notes?page=2&per_page=2',
+            '/api/receive-notes?page=2&per_page=2',
             $this->getAuthHeaders()
         );
         $response->assertSuccessful();
@@ -61,7 +61,7 @@ class GetListTest extends TestCase
     public function testGetListValidation(): void
     {
         $response = $this->get(
-            '/api/receive_notes?page=test&per_page=test',
+            '/api/receive-notes?page=test&per_page=test',
             $this->getAuthHeaders()
         );
         $response->assertStatus(422);

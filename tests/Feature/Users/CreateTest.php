@@ -4,6 +4,7 @@ namespace Tests\Feature\Users;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Hash;
 use Tests\Feature\Traits\HttpHeaders;
 use Tests\TestCase;
 
@@ -16,6 +17,7 @@ class CreateTest extends TestCase
         $request = [
             'name' => substr($this->faker->name, 0, 20),
             'email' => $this->faker->email(),
+            'password' => '123456',
             'role' => 'store_keeper'
         ];
         $response = $this->post(
@@ -53,6 +55,9 @@ class CreateTest extends TestCase
                 ],
                 'role' => [
                     0 => 'The role field is required.'
+                ],
+                'password' => [
+                    0 => 'The password field is required.'
                 ]
             ]
         ]);

@@ -23,7 +23,7 @@ class CreateTest extends TestCase
             'item_id' => $item->id
         ];
         $response = $this->post(
-            '/api/receive_notes',
+            '/api/receive-notes',
             $request,
             $this->getAuthHeaders()
         );
@@ -32,7 +32,7 @@ class CreateTest extends TestCase
             'success' => true
         ]);
         $this->assertDatabaseHas('receive_notes', [
-            'note' => $request['name'],
+            'note' => $request['note'],
             'qty' => $request['qty'],
             'item_id' => $request['item_id'],
         ]);
@@ -47,7 +47,7 @@ class CreateTest extends TestCase
     {
         $request = [];
         $response = $this->post(
-            '/api/receive_notes',
+            '/api/receive-notes',
             $request,
             $this->getAuthHeaders()
         );

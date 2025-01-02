@@ -13,6 +13,8 @@ use App\Repositories\ReceiveNoteRepository;
 use App\Repositories\ReceiveNoteRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
+use App\Services\UserService;
+use App\Services\UserServiceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,11 +23,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
+        // Repositories
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
         $this->app->bind(DispatchNoteRepositoryInterface::class, DispatchNoteRepository::class);
+        $this->app->bind(ItemRepositoryInterface::class, ItemRepository::class);
         $this->app->bind(ReceiveNoteRepositoryInterface::class, ReceiveNoteRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+
+        $this->app->bind(UserServiceInterface::class, UserService::class);
     }
 
     /**

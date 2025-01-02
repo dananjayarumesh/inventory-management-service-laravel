@@ -40,4 +40,16 @@ class JsonResponse
             'errors' => $errors
         ], 422);
     }
+
+    public static function forbidden(string $message): HttpJsonResponse
+    {
+        return response()->json([
+            'errors' => $message
+        ], 403);
+    }
+
+    public static function deleted(): HttpJsonResponse
+    {
+        return response()->json([], 204);
+    }
 }

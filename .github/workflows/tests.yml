@@ -1,0 +1,97 @@
+name: Unit/Feature Tests
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  linux_tests:
+    name: PHP ${{ matrix.php }} - ${{ matrix.stability }} - Linux
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: test_db
+        ports:
+          - 33306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
+    strategy:
+      fail-fast: true
+      matrix:
+        php: [8.4]
+        stability: [prefer-stable]
+
+    steps:
+      - name: 🧐 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔥 Setup PHP with composer v2
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          tools: composer:v2
+
+      - name: ⛑ Setup problem matchers
+        run: echo "::add-matcher::${{ runner.tool_cache }}/phpunit.json"
+
+#      - name: 👍🏼 Verify MySQL connection
+#        run: |
+#          mysql --version
+#          sudo apt-get install -y mysql-client
+#          mysql --host 127.0.0.1 --port ${{ job.services.mysql.ports[3306] }} -uroot -e "SHOW DATABASES"
+      - name: 📖 Cache composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+
+      - name: 📦 Install dependencies
+        run: |
+          php --version
+          composer install --no-progress --no-suggest --prefer-dist --optimize-autoloader
+          composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-progress
+        env:
+#          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          CI: true
+
+      - name: 🛫 Boot application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+          php artisan --version
+
+      - name: 🦅 Migrate database
+        env:
+          DB_CONNECTION: mysql
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_DATABASE: test_db
+          DB_USERNAME: root
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+        run: |
+          mysql --version
+          php artisan migrate:fresh --seed
+
+      - name: 🧪 Run PHP tests
+        env:
+          DB_CONNECTION: mysql
+          DB_PORT: ${{ job.services.mysql.ports[3306] }}
+          DB_DATABASE: test_db
+          DB_USERNAME: root
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+        run: |
+          php artisan config:clear
+          php artisan config:cache
+          php vendor/phpunit/phpunit/phpunit --testdox
+
+      - name: 📚 Upload artifacts
+        uses: actions/upload-artifact@master
+        if: failure()
+        with:
+          name: Logs
+          path: ./storage/logs

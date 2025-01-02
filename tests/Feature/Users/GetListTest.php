@@ -41,7 +41,7 @@ class GetListTest extends TestCase
 
         $response->assertStatus(status: 403);
         $response->assertJson([
-            'errors' => 'You do not have access to perform this action.'
+            'error' => 'You do not have access to perform this action.'
         ]);
     }
 }

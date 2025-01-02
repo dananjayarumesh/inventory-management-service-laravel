@@ -35,7 +35,8 @@ class DispatchNoteController extends Controller
         );
     }
 
-    public function show ($id) : HttpJsonResponse{
+    public function show($id): HttpJsonResponse
+    {
         return JsonResponse::success(
             $this->dispatchNoteRepository->getSingleRecord($id)
         );
@@ -52,7 +53,7 @@ class DispatchNoteController extends Controller
             );
             return JsonResponse::created();
         } catch (ItemQtyNotSufficientException $exception) {
-            return JsonResponse::validationError([
+            return JsonResponse::validation([
                 'qty' => [
                     'Insufficient remaining quantity. Please reduce your input.'
                 ]

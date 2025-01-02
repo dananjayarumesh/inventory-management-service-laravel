@@ -34,7 +34,12 @@ class JsonResponse
         return response()->json([], 204);
     }
 
-    public static function validationError(array $errors): HttpJsonResponse
+    public static function deleted(): HttpJsonResponse
+    {
+        return response()->json([], 204);
+    }
+
+    public static function validation(array $errors): HttpJsonResponse
     {
         return response()->json([
             'errors' => $errors
@@ -44,12 +49,14 @@ class JsonResponse
     public static function forbidden(string $message): HttpJsonResponse
     {
         return response()->json([
-            'errors' => $message
+            'error' => $message
         ], 403);
     }
 
-    public static function deleted(): HttpJsonResponse
+    public static function unauthenticated(string $message): HttpJsonResponse
     {
-        return response()->json([], 204);
+        return response()->json([
+            'error' => $message
+        ], 401);
     }
 }

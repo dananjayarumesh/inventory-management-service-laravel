@@ -13,6 +13,8 @@ use App\Repositories\ReceiveNoteRepository;
 use App\Repositories\ReceiveNoteRepositoryInterface;
 use App\Repositories\UserRepository;
 use App\Repositories\UserRepositoryInterface;
+use App\Services\AuthService;
+use App\Services\AuthServiceInterface;
 use App\Services\UserService;
 use App\Services\UserServiceInterface;
 
@@ -30,6 +32,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ReceiveNoteRepositoryInterface::class, ReceiveNoteRepository::class);
         $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
 
+        $this->app->bind(AuthServiceInterface::class, AuthService::class);
         $this->app->bind(UserServiceInterface::class, UserService::class);
     }
 

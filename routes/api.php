@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DispatchNoteController;
 use App\Http\Controllers\ItemController;
@@ -16,6 +17,12 @@ Route::prefix('api')
                 Route::resource('categories', CategoryController::class);
                 Route::resource('dispatch-notes', DispatchNoteController::class);
                 Route::resource('receive-notes', ReceiveNoteController::class);
-                Route::resource('users', UserController::class)->middleware(HasRole::class.':admin');
+                Route::resource('users', UserController::class)->middleware(HasRole::class . ':admin');
+            });
+
+        Route::prefix('auth')
+            ->group(function () {
+                Route::post('login', [AuthController::class, 'login']);
+                Route::post('refresh', [AuthController::class, 'refresh']);
             });
     });

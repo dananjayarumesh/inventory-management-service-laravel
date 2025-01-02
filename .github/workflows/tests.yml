@@ -71,8 +71,6 @@ jobs:
           DB_PORT: ${{ job.services.mysql.ports[3306] }}
           DB_DATABASE: test_db
           DB_USERNAME: root
-          REDIS_HOST: localhost
-          REDIS_PORT: 6379
         run: |
           mysql --version
           php artisan migrate:fresh --seed

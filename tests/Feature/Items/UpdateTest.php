@@ -29,6 +29,8 @@ class UpdateTest extends TestCase
         $this->assertDatabaseHas('items', [
             'id' => $item->id,
             'name' => $request['name'],
+            'moq' => 0,
+            'qty' => 0,
             'category_id' => $category->id
         ]);
     }

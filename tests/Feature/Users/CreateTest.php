@@ -1,8 +1,7 @@
 <?php
 
-namespace Tests\Feature\Items;
+namespace Tests\Feature\Users;
 
-use App\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\Feature\Traits\HttpHeaders;
@@ -14,28 +13,24 @@ class CreateTest extends TestCase
 
     public function testCreateRecord(): void
     {
-        $category = Category::factory()->create();
         $request = [
-            'name' => $this->faker->name,
-            'category_id' => $category->id
+            'name' => substr($this->faker->name, 0, 20),
+            'email' => $this->faker->email(),
+            'role' => 'store_keeper'
         ];
         $response = $this->post(
-            '/api/items',
+            '/api/users',
             $request,
-            $this->getAuthHeaders([
-                'id' => 100
-            ])
+            $this->getAuthHeaders()
         );
         $response->assertStatus(201);
         $response->assertJson([
             'success' => true
         ]);
-        $this->assertDatabaseHas('items', [
+        $this->assertDatabaseHas('users', [
             'name' => $request['name'],
-            'category_id' => $category->id,
-            'moq' => 0,
-            'qty' => 0,
-            'created_by' => 100
+            'email' => $request['email'],
+            'role' => $request['role'],
         ]);
     }
 
@@ -43,7 +38,7 @@ class CreateTest extends TestCase
     {
         $request = [];
         $response = $this->post(
-            '/api/items',
+            '/api/users',
             $request,
             $this->getAuthHeaders()
         );
@@ -53,31 +48,33 @@ class CreateTest extends TestCase
                 'name' => [
                     0 => 'The name field is required.'
                 ],
-                'category_id' => [
-                    0 => 'The category id field is required.'
+                'email' => [
+                    0 => 'The email field is required.'
                 ],
+                'role' => [
+                    0 => 'The role field is required.'
+                ]
             ]
         ]);
     }
 
-    public function testRecordInvalidCategoryId(): void
+    public function testCreateRecordOnlyAdminHaveAccess()
     {
         $request = [
-            'name' => $this->faker->name,
-            'category_id' => 2 // invalid category id
+            'name' => substr($this->faker->name, 0, 20),
+            'email' => $this->faker->email(),
+            'role' => 'store_keeper'
         ];
         $response = $this->post(
-            '/api/items',
+            '/api/users/',
             $request,
-            $this->getAuthHeaders()
+            $this->getAuthHeaders([
+                'role' => 'store_keeper'
+            ])
         );
-        $response->assertStatus(status: 422);
+        $response->assertStatus(status: 403);
         $response->assertJson([
-            'errors' => [
-                'category_id' => [
-                    0 => 'The selected category id is invalid.'
-                ],
-            ]
+            'errors' => 'You do not have access to perform this action.'
         ]);
     }
 }

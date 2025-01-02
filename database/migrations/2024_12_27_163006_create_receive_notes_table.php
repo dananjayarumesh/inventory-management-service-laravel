@@ -18,7 +18,7 @@ return new class extends Migration
                 ->references('id')
                 ->on('items');
             $table->string('note');
-            $table->integer('qty');
+            $table->unsignedInteger('qty');
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')
                 ->references('id')

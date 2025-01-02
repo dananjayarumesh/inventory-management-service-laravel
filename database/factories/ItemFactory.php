@@ -21,6 +21,8 @@ class ItemFactory extends Factory
         return [
             'category_id' => Category::factory(),
             'name' => fake()->name,
+            'qty' => fake()->numberBetween(0),
+            'moq' =>  fake()->numberBetween(0),
             'created_by' => User::factory()
         ];
     }

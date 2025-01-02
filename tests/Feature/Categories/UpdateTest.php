@@ -48,7 +48,7 @@ class UpdateTest extends TestCase
         ]);
     }
 
-    public function testRecordInvalidCategoryId(): void
+    public function testUpdateRecordInvalidCategoryId(): void
     {
         $request = [
             'name' => substr($this->faker->name, 0, 20)

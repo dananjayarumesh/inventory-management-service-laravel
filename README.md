@@ -51,6 +51,8 @@ php artisan key:generate
 php artisan jwt:secret
 ```
 
+After completing above steps you must be able to access API through `http://localhost:8000`
+
 ### Run Unit/Feature Tests
 
 ```sh
